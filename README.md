@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://github.com/ikajdan/reflow_hot_plate/assets/28950897/c3468495-384c-4000-b4db-6c9cec08a22f" alt="Reflow Hot Plate" width="300" height="auto"/>
+  <img src="https://github.com/user-attachments/assets/fd00aeb9-993f-41d0-811c-a98a977dc7e1" width="300" height="auto"/>
   <br><br>
   Reflow Hot Plate
   <br><br>
@@ -7,10 +7,13 @@
 
 <p align="center">
   <a href="#features">Features</a> •
+  <a href="#design">Design</a> •
   <a href="#hardware">Hardware</a> •
+  <a href="#desktop-application">Desktop Application</a> •
   <a href="#firmware">Firmware</a> •
-  <a href="#usage">Usage</a> •
   <a href="#gallery">Gallery</a> •
+  <a href="#usage">Usage</a> •
+  <a href="#citation">Citation</a>
   <a href="#license">License</a>
 </p>
 
@@ -18,11 +21,44 @@ The STM32-Based Reflow Hot Plate Project is an open-source initiative aimed at c
 
 ## Features
 
-- **Precise temperature control:** The STM32 microcontroller provides accurate temperature control, ensuring optimal soldering results for a wide range of solder pastes and components.
-- **User-friendly interface:** A user-friendly interface, featuring an OLED display and tactile buttons, allows you to easily set and monitor reflow profiles.
-- **Customizable reflow profiles:** Create, edit, and save reflow profiles tailored to your specific soldering requirements.
-- **Safety mechanisms:** Built-in safety features, such as over-temperature protection and emergency shut-off, ensure a secure soldering environment.
-- **Open-source:** The entire project, including schematics, PCB layouts, and firmware is open-source and available for improvement and customization.
+- IMS PCB heatbed capable of reaching 210°C, with uniform thermal distribution.
+- PID-based temperature control with ±5°C accuracy.
+- Redundant sensing with PT100 RTD (ADC) and K-type thermocouple (MAX6675 via SPI).
+- User interface with OLED (I²C), tactile buttons, and LEDs.
+- USB CDC connectivity for desktop control and logging.
+- Safety features: watchdog, over-temp detection, error recovery.
+- Modular design: heatbed, control board, and front panel separable.
+
+## Design
+
+The device operates with a 24V, 5A external power supply and includes a fuse for protection. A buck converter steps down the voltage, followed by a linear regulator that ensures stability for the analog circuitry.
+
+For temperature measurement, two sensors provide redundancy:
+- A PT100 RTD connects to the ADC of the microcontroller.
+- A thermocouple (TC) interfaces via SPI using a dedicated IC.
+
+An STM32 microcontroller manages the system due to its extensive documentation, peripheral options, and familiarity. It:
+- Controls temperature in a closed loop using PWM to regulate the heating element.
+- Handles the user interface, with a screen displaying temperature and status, and buttons for menu navigation and operation.
+
+A USB CDC connection enables communication with a desktop application for remote control and temperature monitoring.
+
+The heating element uses an IMS PCB, allowing customization of size, temperature, and power. It can be replaced if damaged.
+
+The reflow plate includes safety features such as over-temperature, overcurrent, and short-circuit protection for reliability.
+
+The hardware consists of three main parts:
+1. Heatbed – Heats the PCB.
+1. Control board – Manages heating and user interaction.
+1. Front panel – Displays status and allows user input.
+
+<br>
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/12ac57f4-dc83-411c-b3e9-971c5882201d" width="75%"></img>
+  <br><br>
+  <em>Block diagram of the project.</em>
+</div>
+<br>
 
 ## Hardware
 
@@ -46,6 +82,48 @@ These components are designed to be 3D printed and assembled together to create 
 
 For detailed hardware schematics, PCB layout and CAD models, please refer to the [Hardware](hardware/) directory.
 
+<br>
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/e0fb0299-5320-42c2-9930-3df8cd710e0c" width="45%"></img>
+  &nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="https://github.com/user-attachments/assets/1fc3965f-3010-4641-ae0c-bb6c6d297399" width="45%"></img>
+  <br><br>
+  <em>Front and rear view of the control board.</em>
+</div>
+<br>
+
+<br>
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/5d92b648-7acc-413a-b1c6-34d8abe610ef" width="45%"></img>
+  &nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="https://github.com/user-attachments/assets/be5a13e3-7623-475b-a9c3-d8398da151f8" width="45%"></img>
+  <br><br>
+  <em>Front and rear view of the hot plate.</em>
+</div>
+<br>
+
+<br>
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/047c66aa-6906-41f6-ba6a-bf96980a0972" width="45%"></img>
+  &nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="https://github.com/user-attachments/assets/2eeb552f-069c-4829-87ab-ce935bd5a3fc" width="45%"></img>
+  <br><br>
+  <em>Front and rear view of the front panel.</em>
+</div>
+<br>
+
+## Desktop Application
+
+A GTK-based Python application (PyGObject) provides live plotting of current and target temperature, displays system state and heating stage, and allows process start/abort via USB. It can log session data to CSV and includes a device emulator using virtual serial ports (socat + pyserial) for development and testing.
+
+<br>
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/be5dc253-b7f2-4c92-a5d5-f75a23c24d82" width="75%"></img>
+  <br><br>
+  <em>Front and rear view of the front panel.</em>
+</div>
+<br>
+
 ## Firmware
 
 The firmware for the reflow hot plate is developed using the STM32CubeIDE. It includes:
@@ -57,6 +135,14 @@ The firmware for the reflow hot plate is developed using the STM32CubeIDE. It in
 
 The Cube project can be found in the [Firmware](firmware/) directory.
 
+## Gallery
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/5577cf35-7ddc-4f20-9051-f766653a4d50" height="240">
+  <img src="https://github.com/user-attachments/assets/74a66a5a-281d-488d-b156-f5e1ea3efb95" height="240">
+  <img src="https://github.com/user-attachments/assets/521d3ed9-4d65-410e-be65-e40fc1e60c0c" height="240">
+</div>
+
 ## Usage
 
 1. Power on the reflow hot plate and wait for it to initialize.
@@ -65,15 +151,29 @@ The Cube project can be found in the [Firmware](firmware/) directory.
 1. The hot plate will execute the selected reflow profile, precisely controlling the temperature to solder the components onto the PCB.
 1. Once the reflow process is complete, allow the PCB to cool before removing it from the hot plate.
 
-## Gallery
+To visualize the temperature distribution on the heatbed, FLIR Lepton 3.5 IR camera was used.
 
-<img src="https://github.com/ikajdan/reflow_hot_plate/assets/28950897/f0e61aaf-80ff-4ed2-aad6-bbd336b23196" width="30%"></img>
-<img src="https://github.com/ikajdan/reflow_hot_plate/assets/28950897/86b3246f-bf8c-475d-af1c-53e835ec0c3f" width="30%"></img>
-<img src="https://github.com/ikajdan/reflow_hot_plate/assets/28950897/a9347d3d-248d-4953-bed5-8ff7e9e12626" width="30%"></img>
-<img src="https://github.com/ikajdan/reflow_hot_plate/assets/28950897/901e2f82-cec4-45c8-be06-c0374f554270" width="30%"></img>
-<img src="https://github.com/ikajdan/reflow_hot_plate/assets/28950897/b9648db5-6c5c-4180-8398-41f9e938b2ea" width="30%"></img>
-<img src="https://github.com/ikajdan/reflow_hot_plate/assets/28950897/4947a20e-c97b-49a8-8e7f-02202b682c66" width="30%"></img>
+<br>
+<div align="center">
+  <img width="320" height="240" alt="obraz" src="https://github.com/user-attachments/assets/d3cba5f0-dfb3-40bc-8853-9348a2d1850c" />
+  <br><br>
+  <em>Thermal image of the heatbed during reflow process.</em>
+</div>
+<br>
+
+## Citation
+
+If you find this project useful for your research, consider citing it using the following BibTeX entry:
+
+```bibtex
+@mastersthesis{2024:t56856,
+	title="{Design and Implementation of a Reflow Hot Plate Soldering Device}",
+	school="Faculty of Automatic Control, Robotics & Electrical Engineering, Poznan University of Technology",
+	year="2024",
+	language="en",
+}
+```
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE.md), which means you are free to use, modify, and distribute the project's source code and documentation for both commercial and non-commercial purposes.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for details.
