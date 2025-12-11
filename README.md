@@ -13,7 +13,7 @@
   <a href="#firmware">Firmware</a> •
   <a href="#gallery">Gallery</a> •
   <a href="#usage">Usage</a> •
-  <a href="#citation">Citation</a>
+  <a href="#citation">Citation</a> •
   <a href="#license">License</a>
 </p>
 
@@ -167,10 +167,11 @@ If you find this project useful for your research, consider citing it using the 
 
 ```bibtex
 @mastersthesis{2024:t56856,
-	title="{Design and Implementation of a Reflow Hot Plate Soldering Device}",
-	school="Faculty of Automatic Control, Robotics & Electrical Engineering, Poznan University of Technology",
-	year="2024",
-	language="en",
+    title="{Design and Implementation of a Reflow Hot Plate Soldering Device}",
+    author="Ignacy Kajdan",
+    school="Faculty of Automatic Control, Robotics & Electrical Engineering, Poznan University of Technology",
+    year="2024",
+    language="en",
 }
 ```
 
